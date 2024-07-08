@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Zdravja Trebuha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px; /* Adjust as needed */
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            width: calc(100% - 16px); /* Adjust for padding */
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Zdravja Trebuha</h1>
+        <form id="healthForm">
+            <label>Mastna in ocvrta hrana (kos):</label>
+            <input type="number" id="mastna_hrana" min="0" required>
+
+            <label>Preveč začinjena hrana (kos):</label>
+            <input type="number" id="zacimbe" min="0" required>
+
+            <label>Kofein (skodelica):</label>
+            <input type="number" id="kofein" min="0" required>
+
+            <label>Alkohol (skodelica):</label>
+            <input type="number" id="alkohol" min="0" required>
+
+            <label>Preveč sladkorja (cca grami):</label>
+            <input type="number" id="sladkor" min="0" required>
+
+            <label>Citrusi in kisla hrana (kos):</label>
+            <input type="number" id="citrusi" min="0" required>
+
+            <label>Surova ali premalo kuhana hrana (kos):</label>
+            <input type="number" id="surova_hrana" min="0" required>
+
+            <button type="button" class="submit-btn" onclick="calculateHealth()">Izračunaj</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateHealth() {
+            // Preverjanje ali so vsa polja izpolnjena
+            const inputs = document.querySelectorAll('input[type="number"]');
+            let isValid = true;
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert("Prosim, izpolnite vsa polja z veljavnimi vrednostmi.");
+                return;
+            }
+
+            // Izračun zdravstvenega stanja
+            const mastnaHrana = parseInt(document.getElementById('mastna_hrana').value) || 0;
+            const zacimbe = parseInt(document.getElementById('zacimbe').value) || 0;
+            const kofein = parseInt(document.getElementById('kofein').value) || 0;
+            const alkohol = parseInt(document.getElementById('alkohol').value) || 0;
+            const sladkor = parseInt(document.getElementById('sladkor').value) || 0;
+            const citrusi = parseInt(document.getElementById('citrusi').value) || 0;
+            const surovaHrana = parseInt(document.getElementById('surova_hrana').value) || 0;
+
+            let status = "V TREBUHU JE VSE OK 😄";
+
+            if (mastnaHrana > 2 || kofein > 2 || alkohol > 1 || sladkor > 100) {
+                if (mastnaHrana > 3 || kofein > 3 || alkohol > 2 || sladkor > 150) {
+                    status = "ZELO SLABO 🫠";
+                } else {
+                    status = "LAHKO PRIDE DO MANJŠIH ZAPLETOV 😅";
+                }
+            }
+
+            document.getElementById('result').innerText = status;
+        }
+    </script>
+</body>
+</html>
+
